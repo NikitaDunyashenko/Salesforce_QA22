@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 public class LeadsDetailsPage extends HomePage{
 
     private final static By TOAST_MESSAGE = By.xpath("//div[contains(@class,'slds-theme--success')]");
-
     private final static By FULL_NAME_LOCATOR = By.xpath("//*[text()='Name']//parent::div//following-sibling::div//descendant::lightning-formatted-name");
     private final static By COMPANY_NAME_LOCATOR = By.xpath("//*[text()='Company']//parent::div//following-sibling::div//descendant::lightning-formatted-text");
     private final static By JOB_TITLE_LOCATOR = By.xpath("//*[text()='Title']//parent::div//following-sibling::div//descendant::lightning-formatted-text");
@@ -17,6 +16,9 @@ public class LeadsDetailsPage extends HomePage{
     private final static By WEBSITE_LOCATOR = By.xpath("//*[text()='Website']//parent::div//following-sibling::div//descendant::lightning-formatted-url");
     private final static By NUMBER_OF_EMPLOYEES_LOCATOR = By.xpath("//*[text()='No. of Employees']//parent::div//following-sibling::div//descendant::lightning-formatted-number");
     private final static By ANNUAL_REVENUE_LOCATOR = By.xpath("//*[text()='Annual Revenue']//parent::div//following-sibling::div//descendant::lightning-formatted-text");
+    private final static By DESCRIPTION_LOCATOR = By.xpath("//span[text()='Description']//parent::div//following-sibling::div//lightning-formatted-text");
+    private final static String DROPDOWNS_LOCATOR = "//span[text()='%s']//parent::div//following-sibling::div//lightning-formatted-text";
+
 
     public LeadsDetailsPage(WebDriver driver) {
         super(driver);
@@ -25,6 +27,30 @@ public class LeadsDetailsPage extends HomePage{
     public boolean isToastMessageAppears() {
         waitForElementDisplayed(TOAST_MESSAGE);
         return driver.findElement(TOAST_MESSAGE).isDisplayed();
+    }
+
+    private By getDropdownsLocator(String labelName) {
+        return By.xpath(String.format(DROPDOWNS_LOCATOR, labelName));
+    }
+
+    public String getDescription() {
+        return driver.findElement(DESCRIPTION_LOCATOR).getText();
+    }
+
+    public String getLeadStatus() {
+        return driver.findElement(getDropdownsLocator("Lead Status")).getText();
+    }
+
+    public String getRating() {
+        return driver.findElement(getDropdownsLocator("Rating")).getText();
+    }
+
+    public String getLeadSource() {
+        return driver.findElement(getDropdownsLocator("Lead Source")).getText();
+    }
+
+    public String getIndustry() {
+        return driver.findElement(getDropdownsLocator("Industry")).getText();
     }
 
     public String getFullName() {

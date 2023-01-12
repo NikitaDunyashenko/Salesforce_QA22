@@ -28,18 +28,30 @@ public class LeadsTests extends BaseTest{
         String country = "Belarus";
         String numberOfEmployees = "25";
         String annualRevenue = "$100,000";
+        String leadStatus = "New";
+        String salutation = "Mr.";
+        String rating = "Hot";
+        String leadSource = "Web";
+        String industry = "Apparel";
+        String street = "Pobediteley avenue, 7A";
+        String description = "lead from the company we met at conference";
 
-        newLeadModal.fillForm(firstName, lastName, phone, companyName, email, title, website, city, country, numberOfEmployees, annualRevenue);
+        newLeadModal.fillForm(firstName, lastName, phone, companyName, email, title, website, city, country, numberOfEmployees, annualRevenue, leadStatus, salutation, rating, leadSource, industry, street, description);
         newLeadModal.clickSaveButton();
 
-        Assert.assertEquals(leadsDetailsPage.getFullName(), firstName + " " + lastName);
+        Assert.assertEquals(leadsDetailsPage.getFullName(),salutation + " " + firstName + " " + lastName);
         Assert.assertEquals(leadsDetailsPage.getCompanyName(), companyName);
         Assert.assertEquals(leadsDetailsPage.getJobTitle(), title);
         Assert.assertEquals(leadsDetailsPage.getPhoneNumber(), phone);
         Assert.assertEquals(leadsDetailsPage.getEmailAddress(), email);
-        Assert.assertEquals(leadsDetailsPage.getAddress(), city + "\n" + country);
+        Assert.assertEquals(leadsDetailsPage.getAddress(), street + "\n" + city + "\n" + country);
         Assert.assertEquals(leadsDetailsPage.getWebsiteURL(), website);
         Assert.assertEquals(leadsDetailsPage.getNumberOfEmployees(), numberOfEmployees);
         Assert.assertEquals(leadsDetailsPage.getAnnualRevenue(), annualRevenue);
+        Assert.assertEquals(leadsDetailsPage.getLeadStatus(), leadStatus);
+        Assert.assertEquals(leadsDetailsPage.getRating(), rating);
+        Assert.assertEquals(leadsDetailsPage.getLeadSource(), leadSource);
+        Assert.assertEquals(leadsDetailsPage.getIndustry(), industry);
+        Assert.assertEquals(leadsDetailsPage.getDescription(), description);
     }
 }
