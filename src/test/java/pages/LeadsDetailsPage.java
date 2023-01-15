@@ -1,5 +1,6 @@
 package pages;
 
+import models.Lead;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,6 +23,11 @@ public class LeadsDetailsPage extends HomePage{
 
     public LeadsDetailsPage(WebDriver driver) {
         super(driver);
+    }
+
+    public Lead getLeadDetails() {
+        Lead lead = new Lead(getSalutation(), getFirstName(), getLastName(), getCompanyName(), getJobTitle(), getLeadStatus(), getPhoneNumber(), getEmailAddress(), getRating(), getStreet(), getCity(), getCountry(), getWebsiteURL(), getNumberOfEmployees(), getAnnualRevenue(), getLeadSource(), getIndustry(), getDescription());
+        return lead;
     }
 
     public boolean isToastMessageAppears() {
@@ -53,10 +59,32 @@ public class LeadsDetailsPage extends HomePage{
         return driver.findElement(getDropdownsLocator("Industry")).getText();
     }
 
-    public String getFullName() {
-        WebElement fullName = driver.findElement(FULL_NAME_LOCATOR);
-        scrollToElement(fullName);
-        return driver.findElement(FULL_NAME_LOCATOR).getText();
+    public String getSalutation() {
+        WebElement fullNameLocator = driver.findElement(FULL_NAME_LOCATOR);
+        scrollToElement(fullNameLocator);
+        String fullName = driver.findElement(FULL_NAME_LOCATOR).getText();
+        int firstSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().indexOf(" ");
+        String salutation = fullName.substring(0, firstSpaceIndex - 1);
+        return salutation;
+    }
+
+    public String getFirstName() {
+        WebElement fullNameLocator = driver.findElement(FULL_NAME_LOCATOR);
+        scrollToElement(fullNameLocator);
+        String fullName = driver.findElement(FULL_NAME_LOCATOR).getText();
+        int firstSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().indexOf(" ");
+        int lastSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().lastIndexOf(" ");
+        String firstName = fullName.substring(firstSpaceIndex + 1, lastSpaceIndex - 1);
+        return firstName;
+    }
+
+    public String getLastName() {
+        WebElement fullNameLocator = driver.findElement(FULL_NAME_LOCATOR);
+        scrollToElement(fullNameLocator);
+        String fullName = driver.findElement(FULL_NAME_LOCATOR).getText();
+        int lastSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().lastIndexOf(" ");
+        String lastName = fullName.substring(lastSpaceIndex + 1);
+        return lastName;
     }
 
     public String getCompanyName() {
@@ -83,10 +111,32 @@ public class LeadsDetailsPage extends HomePage{
         return driver.findElement(EMAIL_LOCATOR).getText();
     }
 
-    public String getAddress() {
-        WebElement address = driver.findElement(ADDRESS_LOCATOR);
-        scrollToElement(address);
-        return driver.findElement(ADDRESS_LOCATOR).getText();
+    public String getStreet() {
+        WebElement addressLocator = driver.findElement(ADDRESS_LOCATOR);
+        scrollToElement(addressLocator);
+        String address = driver.findElement(ADDRESS_LOCATOR).getText();
+        int firstNewLineIndex = address.indexOf("\n");
+        String street = address.substring(0, firstNewLineIndex - 1);
+        return street;
+    }
+
+    public String getCity() {
+        WebElement addressLocator = driver.findElement(ADDRESS_LOCATOR);
+        scrollToElement(addressLocator);
+        String address = driver.findElement(ADDRESS_LOCATOR).getText();
+        int firstNewLineIndex = address.indexOf("\n");
+        int lastNewLineIndex = address.lastIndexOf("\n");
+        String city = address.substring(firstNewLineIndex + 1, lastNewLineIndex - 1);
+        return city;
+    }
+
+    public String getCountry() {
+        WebElement addressLocator = driver.findElement(ADDRESS_LOCATOR);
+        scrollToElement(addressLocator);
+        String address = driver.findElement(ADDRESS_LOCATOR).getText();
+        int lastNewLineIndex = address.lastIndexOf("\n");
+        String country = address.substring(lastNewLineIndex + 1);
+        return country;
     }
 
     public String getWebsiteURL() {
