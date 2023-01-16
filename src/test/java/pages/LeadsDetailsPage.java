@@ -64,7 +64,7 @@ public class LeadsDetailsPage extends HomePage{
         scrollToElement(fullNameLocator);
         String fullName = driver.findElement(FULL_NAME_LOCATOR).getText();
         int firstSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().indexOf(" ");
-        String salutation = fullName.substring(0, firstSpaceIndex - 1);
+        String salutation = fullName.substring(0, firstSpaceIndex);
         return salutation;
     }
 
@@ -74,7 +74,7 @@ public class LeadsDetailsPage extends HomePage{
         String fullName = driver.findElement(FULL_NAME_LOCATOR).getText();
         int firstSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().indexOf(" ");
         int lastSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().lastIndexOf(" ");
-        String firstName = fullName.substring(firstSpaceIndex + 1, lastSpaceIndex - 1);
+        String firstName = fullName.substring(firstSpaceIndex + 1, lastSpaceIndex);
         return firstName;
     }
 
@@ -116,7 +116,7 @@ public class LeadsDetailsPage extends HomePage{
         scrollToElement(addressLocator);
         String address = driver.findElement(ADDRESS_LOCATOR).getText();
         int firstNewLineIndex = address.indexOf("\n");
-        String street = address.substring(0, firstNewLineIndex - 1);
+        String street = address.substring(0, firstNewLineIndex);
         return street;
     }
 
@@ -126,7 +126,7 @@ public class LeadsDetailsPage extends HomePage{
         String address = driver.findElement(ADDRESS_LOCATOR).getText();
         int firstNewLineIndex = address.indexOf("\n");
         int lastNewLineIndex = address.lastIndexOf("\n");
-        String city = address.substring(firstNewLineIndex + 1, lastNewLineIndex - 1);
+        String city = address.substring(firstNewLineIndex + 1, lastNewLineIndex);
         return city;
     }
 
