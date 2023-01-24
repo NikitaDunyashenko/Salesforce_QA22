@@ -1,46 +1,123 @@
 package models;
 
+import enums.Industry;
+import enums.LeadSource;
+import enums.LeadStatus;
+import enums.Rating;
+
 import java.util.Objects;
 
 public class Lead {
-    private String salutation;
-    private String firstName;
-    private String lastName;
-    private String companyName;
-    private String jobTitle;
-    private String leadStatus;
-    private String phone;
-    private String email;
-    private String rating;
-    private String street;
-    private String city;
-    private String country;
-    private String website;
-    private String numberOfEmployees;
-    private String annualRevenue;
-    private String leadSource;
-    private String industry;
-    private String description;
+    private final String salutation;
+    private final String firstName;
+    private final String lastName;
+    private final String companyName;
+    private final String jobTitle;
+    private final String phone;
+    private final String email;
+    private final Rating rating;
+    private final String street;
+    private final String city;
+    private final String country;
+    private final String website;
+    private final String numberOfEmployees;
+    private final String annualRevenue;
+    private final LeadSource leadSource;
+    private final Industry industry;
+    private final String description;
+    private final LeadStatus leadStatus;
 
-    public Lead(String salutation, String firstName, String lastName, String companyName, String jobTitle, String leadStatus, String phone, String email, String rating, String street, String city, String country, String website, String numberOfEmployees, String annualRevenue, String leadSource, String industry, String description) {
-        this.salutation = salutation;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.companyName = companyName;
-        this.jobTitle = jobTitle;
-        this.leadStatus = leadStatus;
-        this.phone = phone;
-        this.email = email;
-        this.rating = rating;
-        this.street = street;
-        this.city = city;
-        this.country = country;
-        this.website = website;
-        this.numberOfEmployees = numberOfEmployees;
-        this.annualRevenue = annualRevenue;
-        this.leadSource = leadSource;
-        this.industry = industry;
-        this.description = description;
+    private Lead(LeadBuilder leadBuilder) {
+        this.salutation = leadBuilder.salutation;
+        this.firstName = leadBuilder.firstName;
+        this.lastName = leadBuilder.lastName;
+        this.companyName = leadBuilder.companyName;
+        this.jobTitle = leadBuilder.jobTitle;
+        this.leadStatus = leadBuilder.leadStatus;
+        this.phone = leadBuilder.phone;
+        this.email = leadBuilder.email;
+        this.rating = leadBuilder.rating;
+        this.street = leadBuilder.street;
+        this.city = leadBuilder.city;
+        this.country = leadBuilder.country;
+        this.website = leadBuilder.website;
+        this.numberOfEmployees = leadBuilder.numberOfEmployees;
+        this.annualRevenue = leadBuilder.annualRevenue;
+        this.leadSource = leadBuilder.leadSource;
+        this.industry = leadBuilder.industry;
+        this.description = leadBuilder.description;
+    }
+
+    public String getSalutation() {
+        return salutation;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public LeadStatus getLeadStatus() {
+        return this.leadStatus;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public String getNumberOfEmployees() {
+        return numberOfEmployees;
+    }
+
+    public String getAnnualRevenue() {
+        return annualRevenue;
+    }
+
+    public LeadSource getLeadSource() {
+        return leadSource;
+    }
+
+    public Industry getIndustry() {
+        return industry;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override
@@ -70,79 +147,124 @@ public class Lead {
 
     @Override
     public int hashCode() {
-        return Objects.hash(salutation, firstName, lastName, companyName, jobTitle, leadStatus, phone, email, rating, street, city, country, website, numberOfEmployees, annualRevenue, leadSource, industry, description);
+        return Objects.hash(salutation, firstName, lastName, companyName, jobTitle, leadStatus, phone, email,
+                rating, street, city, country, website, numberOfEmployees, annualRevenue, leadSource, industry,
+                description);
     }
+    public static class LeadBuilder {
+        private String salutation;
+        private String firstName;
+        private String lastName;
+        private String companyName;
+        private String jobTitle;
+        private String phone;
+        private String email;
+        private Rating rating;
+        private String street;
+        private String city;
+        private String country;
+        private String website;
+        private String numberOfEmployees;
+        private String annualRevenue;
+        private LeadSource leadSource;
+        private Industry industry;
+        private String description;
+        private LeadStatus leadStatus;
 
-    public String getSalutation() {
-        return salutation;
-    }
+        public LeadBuilder setSalutation(String salutation) {
+            this.salutation = salutation;
+            return this;
+        }
 
-    public String getFirstName() {
-        return firstName;
-    }
+        public LeadBuilder setLeadStatus(LeadStatus leadStatus) {
+            this.leadStatus = leadStatus;
+            return this;
+        }
 
-    public String getLastName() {
-        return lastName;
-    }
+        public LeadBuilder setFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
 
-    public String getCompanyName() {
-        return companyName;
-    }
+        public LeadBuilder setLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
 
-    public String getJobTitle() {
-        return jobTitle;
-    }
+        public LeadBuilder setCompanyName(String companyName) {
+            this.companyName = companyName;
+            return this;
+        }
 
-    public String getLeadStatus() {
-        return leadStatus;
-    }
+        public LeadBuilder setJobTitle(String jobTitle) {
+            this.jobTitle = jobTitle;
+            return this;
+        }
 
-    public String getPhone() {
-        return phone;
-    }
+        public LeadBuilder setPhone(String phone) {
+            this.phone = phone;
+            return this;
+        }
 
-    public String getEmail() {
-        return email;
-    }
+        public LeadBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
 
-    public String getRating() {
-        return rating;
-    }
+        public LeadBuilder setRating(Rating rating) {
+            this.rating = rating;
+            return this;
+        }
 
-    public String getStreet() {
-        return street;
-    }
+        public LeadBuilder setStreet(String street) {
+            this.street = street;
+            return this;
+        }
 
-    public String getCity() {
-        return city;
-    }
+        public LeadBuilder setCity(String city) {
+            this.city = city;
+            return this;
+        }
 
-    public String getCountry() {
-        return country;
-    }
+        public LeadBuilder setCountry(String country) {
+            this.country = country;
+            return this;
+        }
 
-    public String getWebsite() {
-        return website;
-    }
+        public LeadBuilder setWebsite(String website) {
+            this.website = website;
+            return this;
+        }
 
-    public String getNumberOfEmployees() {
-        return numberOfEmployees;
-    }
+        public LeadBuilder setNumberOfEmployees(String numberOfEmployees) {
+            this.numberOfEmployees = numberOfEmployees;
+            return this;
+        }
 
-    public String getAnnualRevenue() {
-        return annualRevenue;
-    }
+        public LeadBuilder setAnnualRevenue(String annualRevenue) {
+            this.annualRevenue = annualRevenue;
+            return this;
+        }
 
-    public String getLeadSource() {
-        return leadSource;
-    }
+        public LeadBuilder setLeadSource(LeadSource leadSource) {
+            this.leadSource = leadSource;
+            return this;
+        }
 
-    public String getIndustry() {
-        return industry;
-    }
+        public LeadBuilder setIndustry(Industry industry) {
+            this.industry = industry;
+            return this;
+        }
 
-    public String getDescription() {
-        return description;
+        public LeadBuilder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Lead build() {
+            return new Lead(this);
+        }
+
     }
 
 }
