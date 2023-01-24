@@ -1,27 +1,70 @@
 package pages;
 
+import elements.RecordLayoutItem;
+import enums.Industry;
+import enums.LeadSource;
+import enums.LeadStatus;
+import enums.Rating;
+import lombok.extern.log4j.Log4j2;
+import models.Lead;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+@Log4j2
 public class LeadsDetailsPage extends HomePage{
 
     private final static By TOAST_MESSAGE = By.xpath("//div[contains(@class,'slds-theme--success')]");
     private final static By FULL_NAME_LOCATOR = By.xpath("//*[text()='Name']//parent::div//following-sibling::div//descendant::lightning-formatted-name");
-    private final static By COMPANY_NAME_LOCATOR = By.xpath("//*[text()='Company']//parent::div//following-sibling::div//descendant::lightning-formatted-text");
-    private final static By JOB_TITLE_LOCATOR = By.xpath("//*[text()='Title']//parent::div//following-sibling::div//descendant::lightning-formatted-text");
-    private final static By PHONE_NUMBER_LOCATOR = By.xpath("//*[text()='Phone']//parent::div//following-sibling::div//descendant::lightning-formatted-phone");
-    private final static By EMAIL_LOCATOR = By.xpath("//*[text()='Email']//parent::div//following-sibling::div//descendant::emailui-formatted-email-lead");
     private final static By ADDRESS_LOCATOR = By.xpath("//*[text()='Address']//parent::div//following-sibling::div//descendant::lightning-formatted-address");
-    private final static By WEBSITE_LOCATOR = By.xpath("//*[text()='Website']//parent::div//following-sibling::div//descendant::lightning-formatted-url");
-    private final static By NUMBER_OF_EMPLOYEES_LOCATOR = By.xpath("//*[text()='No. of Employees']//parent::div//following-sibling::div//descendant::lightning-formatted-number");
-    private final static By ANNUAL_REVENUE_LOCATOR = By.xpath("//*[text()='Annual Revenue']//parent::div//following-sibling::div//descendant::lightning-formatted-text");
-    private final static By DESCRIPTION_LOCATOR = By.xpath("//span[text()='Description']//parent::div//following-sibling::div//lightning-formatted-text");
     private final static String DROPDOWNS_LOCATOR = "//span[text()='%s']//parent::div//following-sibling::div//lightning-formatted-text";
 
 
     public LeadsDetailsPage(WebDriver driver) {
         super(driver);
+    }
+
+    public Lead getLeadDetails() {
+
+        Lead.LeadBuilder lead = new Lead.LeadBuilder();
+        log.info("setting another Lead object's field: Salutation");
+        lead.setSalutation(new LeadsDetailsPage(driver).getSalutation());
+        log.info("setting another Lead object's field: First Name");
+        lead.setFirstName(new LeadsDetailsPage(driver).getFirstName());
+        log.info("setting another Lead object's field: Last Name");
+        lead.setLastName(new LeadsDetailsPage(driver).getLastName());
+        log.info("setting another Lead object's field: Company");
+        lead.setCompanyName(new RecordLayoutItem(driver, "Company").getDetailsValue());
+        log.info("setting another Lead object's field: Lead Status");
+        lead.setLeadStatus(LeadStatus.fromString("New"));
+        log.info("setting another Lead object's field: Title");
+        lead.setJobTitle(new RecordLayoutItem(driver, "Title").getDetailsValue());
+        log.info("setting another Lead object's field: Phone");
+        lead.setPhone(new RecordLayoutItem(driver, "Phone").getDetailsValue());
+        log.info("setting another Lead object's field: Email");
+        lead.setEmail(new RecordLayoutItem(driver, "Email").getDetailsValue());
+        log.info("setting another Lead object's field: Rating");
+        lead.setRating(Rating.fromString("Hot"));
+        log.info("setting another Lead object's field: Street");
+        lead.setStreet(new LeadsDetailsPage(driver).getStreet());
+        log.info("setting another Lead object's field: City");
+        lead.setCity(new LeadsDetailsPage(driver).getCity());
+        log.info("setting another Lead object's field: Country");
+        lead.setCountry(new LeadsDetailsPage(driver).getCountry());
+        log.info("setting another Lead object's field: Website");
+        lead.setWebsite(new RecordLayoutItem(driver, "Website").getDetailsValue());
+        log.info("setting another Lead object's field: No. of Employees");
+        lead.setNumberOfEmployees(new RecordLayoutItem(driver, "No. of Employees").getDetailsValue());
+        log.info("setting another Lead object's field: Annual Revenue");
+        lead.setAnnualRevenue(new RecordLayoutItem(driver, "Annual Revenue").getDetailsValue());
+        log.info("setting another Lead object's field: Lead Source");
+        lead.setLeadSource(LeadSource.fromString("Web"));
+        log.info("setting another Lead object's field: Industry");
+        lead.setIndustry(Industry.fromString("Apparel"));
+        log.info("setting another Lead object's field: Description");
+        lead.setDescription(new RecordLayoutItem(driver, "Description").getDetailsValue());
+
+        return lead.build();
     }
 
     public boolean isToastMessageAppears() {
@@ -33,78 +76,78 @@ public class LeadsDetailsPage extends HomePage{
         return By.xpath(String.format(DROPDOWNS_LOCATOR, labelName));
     }
 
-    public String getDescription() {
-        return driver.findElement(DESCRIPTION_LOCATOR).getText();
+    public String getSalutation() {
+        log.info("finding Full Name");
+        WebElement fullNameLocator = driver.findElement(FULL_NAME_LOCATOR);
+        scrollToElement(fullNameLocator);
+        log.info("getting text from Full Name");
+        String fullName = driver.findElement(FULL_NAME_LOCATOR).getText();
+        int firstSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().indexOf(" ");
+        String salutation = fullName.substring(0, firstSpaceIndex);
+        log.info(String.format("getting Salutation: %s from Full Name", salutation));
+        return salutation;
     }
 
-    public String getLeadStatus() {
-        return driver.findElement(getDropdownsLocator("Lead Status")).getText();
+    public String getFirstName() {
+        log.info("finding Full Name");
+        WebElement fullNameLocator = driver.findElement(FULL_NAME_LOCATOR);
+        scrollToElement(fullNameLocator);
+        log.info("getting text from Full Name");
+        String fullName = driver.findElement(FULL_NAME_LOCATOR).getText();
+        int firstSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().indexOf(" ");
+        int lastSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().lastIndexOf(" ");
+        String firstName = fullName.substring(firstSpaceIndex + 1, lastSpaceIndex);
+        log.info(String.format("getting First Name: %s from Full Name", firstName));
+        return firstName;
     }
 
-    public String getRating() {
-        return driver.findElement(getDropdownsLocator("Rating")).getText();
+    public String getLastName() {
+        log.info("finding Full Name");
+        WebElement fullNameLocator = driver.findElement(FULL_NAME_LOCATOR);
+        scrollToElement(fullNameLocator);
+        log.info("getting text from Full Name");
+        String fullName = driver.findElement(FULL_NAME_LOCATOR).getText();
+        int lastSpaceIndex = driver.findElement(FULL_NAME_LOCATOR).getText().lastIndexOf(" ");
+        String lastName = fullName.substring(lastSpaceIndex + 1);
+        log.info(String.format("getting Last Name: %s from Full Name", lastName));
+        return lastName;
     }
 
-    public String getLeadSource() {
-        return driver.findElement(getDropdownsLocator("Lead Source")).getText();
+    public String getStreet() {
+        log.info("finding Full Address");
+        WebElement addressLocator = driver.findElement(ADDRESS_LOCATOR);
+        scrollToElement(addressLocator);
+        log.info("getting text from Full Address");
+        String address = driver.findElement(ADDRESS_LOCATOR).getText();
+        int firstNewLineIndex = address.indexOf("\n");
+        String street = address.substring(0, firstNewLineIndex);
+        log.info(String.format("getting Street: %s from Full Address", street));
+        return street;
     }
 
-    public String getIndustry() {
-        return driver.findElement(getDropdownsLocator("Industry")).getText();
+    public String getCity() {
+        log.info("finding Full Address");
+        WebElement addressLocator = driver.findElement(ADDRESS_LOCATOR);
+        scrollToElement(addressLocator);
+        log.info("getting text from Full Address");
+        String address = driver.findElement(ADDRESS_LOCATOR).getText();
+        int firstNewLineIndex = address.indexOf("\n");
+        int lastNewLineIndex = address.lastIndexOf("\n");
+        String city = address.substring(firstNewLineIndex + 1, lastNewLineIndex);
+        log.info(String.format("getting City: %s from Full Address", city));
+        return city;
     }
 
-    public String getFullName() {
-        WebElement fullName = driver.findElement(FULL_NAME_LOCATOR);
-        scrollToElement(fullName);
-        return driver.findElement(FULL_NAME_LOCATOR).getText();
-    }
-
-    public String getCompanyName() {
-        WebElement CompanyName = driver.findElement(COMPANY_NAME_LOCATOR);
-        scrollToElement(CompanyName);
-        return driver.findElement(COMPANY_NAME_LOCATOR).getText();
-    }
-
-    public String getJobTitle() {
-        WebElement jobTitle = driver.findElement(JOB_TITLE_LOCATOR);
-        scrollToElement(jobTitle);
-        return driver.findElement(JOB_TITLE_LOCATOR).getText();
-    }
-
-    public String getPhoneNumber() {
-        WebElement phoneNumber = driver.findElement(PHONE_NUMBER_LOCATOR);
-        scrollToElement(phoneNumber);
-        return driver.findElement(PHONE_NUMBER_LOCATOR).getText();
-    }
-
-    public String getEmailAddress() {
-        WebElement emailAddress = driver.findElement(EMAIL_LOCATOR);
-        scrollToElement(emailAddress);
-        return driver.findElement(EMAIL_LOCATOR).getText();
-    }
-
-    public String getAddress() {
-        WebElement address = driver.findElement(ADDRESS_LOCATOR);
-        scrollToElement(address);
-        return driver.findElement(ADDRESS_LOCATOR).getText();
-    }
-
-    public String getWebsiteURL() {
-        WebElement websiteURL = driver.findElement(WEBSITE_LOCATOR);
-        scrollToElement(websiteURL);
-        return driver.findElement(WEBSITE_LOCATOR).getText();
-    }
-
-    public String getNumberOfEmployees() {
-        WebElement numberOfEmployees = driver.findElement(NUMBER_OF_EMPLOYEES_LOCATOR);
-        scrollToElement(numberOfEmployees);
-        return driver.findElement(NUMBER_OF_EMPLOYEES_LOCATOR).getText();
-    }
-
-    public String getAnnualRevenue() {
-        WebElement annualRevenue = driver.findElement(ANNUAL_REVENUE_LOCATOR);
-        scrollToElement(annualRevenue);
-        return driver.findElement(ANNUAL_REVENUE_LOCATOR).getText();
+    public String getCountry() {
+        log.info("finding Full Address");
+        WebElement addressLocator = driver.findElement(ADDRESS_LOCATOR);
+        scrollToElement(addressLocator);
+        log.info("getting text from Full Address");
+        String address = driver.findElement(ADDRESS_LOCATOR).getText();
+        int lastNewLineIndex = address.lastIndexOf("\n");
+        String country = address.substring(lastNewLineIndex + 1);
+        log.info(String.format("getting Country: %s from Full Address", country));
+        return country;
     }
 
 }
